@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab Report Explainer</title>
+<style>
+  :root {
+    --bg: #fbfbfa; --panel: #fff; --ink: #1a1a1a; --muted: #6b6b6b;
+    --line: #e4e4e1; --accent: #1f5fa9;
+    --low: #1f5fa9; --high: #a6630a; --crit: #b0241c; --ok: #2b7a4b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16161a; --panel: #1e1e23; --ink: #ececec; --muted: #9a9aa2;
+      --line: #32323a; --accent: #6fa8e8;
+      --low: #6fa8e8; --high: #e0a251; --crit: #f0766c; --ok: #6cc08b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 ui-sans-serif, system-ui, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 28px; font-size: 14px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 20px; margin-bottom: 18px;
+  }
+  label.file {
+    display: block; border: 1.5px dashed var(--line); border-radius: 8px;
+    padding: 26px 16px; text-align: center; cursor: pointer; color: var(--muted);
+  }
+  label.file:hover { border-color: var(--accent); color: var(--ink); }
+  input[type=file] { display: none; }
+  .row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+  .langs { display: flex; gap: 14px; color: var(--muted); font-size: 14px; }
+  button {
+    background: var(--accent); color: #fff; border: 0; border-radius: 7px;
+    padding: 9px 20px; font: inherit; font-weight: 600; cursor: pointer;
+  }
+  button:disabled { opacity: .5; cursor: default; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px;
+       text-transform: uppercase; letter-spacing: .04em; padding-bottom: 8px; }
+  td { padding: 7px 0; border-top: 1px solid var(--line); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .flag { font-size: 11px; font-weight: 700; letter-spacing: .05em; }
+  .f-low { color: var(--low); } .f-high { color: var(--high); }
+  .f-critical { color: var(--crit); } .f-normal { color: var(--muted); }
+  .urgent {
+    border-left: 3px solid var(--crit); background: color-mix(in srgb, var(--crit) 8%, transparent);
+    padding: 12px 16px; border-radius: 0 8px 8px 0; margin-bottom: 18px; font-weight: 600;
+  }
+  .step { font-size: 14px; color: var(--muted); margin-top: 14px; }
+  .step b { color: var(--ink); font-family: ui-monospace, monospace; }
+  .stmt { padding: 10px 0; border-top: 1px solid var(--line); }
+  .stmt:first-child { border-top: 0; }
+  .cites { color: var(--muted); font-size: 12px; font-family: ui-monospace, monospace; margin-top: 3px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em;
+       color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .note { font-size: 13px; color: var(--muted); }
+  .dropped { color: var(--muted); font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .dropped .why { color: var(--high); }
+  .meta { color: var(--muted); font-size: 12px; font-family: ui-monospace, monospace; }
+  .err { color: var(--crit); }
+  .hidden { display: none; }
+  .lead { font-size: 15px; margin: 0; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; }
+  pre.trace {
+    white-space: pre-wrap; word-break: break-word; font-size: 12px; color: var(--muted);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px; margin-top: 8px; font-family: ui-monospace, monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Lab Report Explainer</h1>
+  <p class="sub">Upload a report. It explains each result, flags what needs attention, and
+    suggests a next step &mdash; without diagnosing.</p>
+
+  <div class="card">
+    <label class="file" for="pdf"><span id="fname">Choose a report PDF</span></label>
+    <input type="file" id="pdf" accept="application/pdf">
+    <div class="row">
+      <div class="langs">
+        <label><input type="checkbox" value="en" checked> English</label>
+        <label><input type="checkbox" value="hi"> हिन्दी</label>
+      </div>
+      <button id="go" disabled>Explain</button>
+      <span class="note" id="status"></span>
+    </div>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LANG = { en: 'English', hi: 'हिन्दी' };
+
+$('#pdf').addEventListener('change', e => {
+  const f = e.target.files[0];
+  $('#fname').textContent = f ? f.name : 'Choose a report PDF';
+  $('#go').disabled = !f;
+});
+
+$('#go').addEventListener('click', async () => {
+  const file = $('#pdf').files[0];
+  if (!file) return;
+  const langs = [...document.querySelectorAll('.langs input:checked')].map(i => i.value);
+  if (!langs.length) { $('#status').innerHTML = '<span class="err">Pick a language.</span>'; return; }
+
+  $('#go').disabled = true;
+  $('#status').textContent = 'Reading the report…';
+  $('#out').innerHTML = '';
+
+  const body = new FormData();
+  body.append('file', file);
+  body.append('languages', langs.join(','));
+
+  try {
+    const res = await fetch('/v1/reports/explain', { method: 'POST', body });
+    const data = await res.json();
+    if (!res.ok) {
+      const d = data.detail;
+      const human = (d && d.message) || (typeof d === 'string' ? d : null)
+                    || 'Something went wrong reading that file.';
+      const tech = d && d.detail;
+      $('#out').innerHTML = `<div class="card">
+        <p class="lead">${esc(human)}</p>
+        ${tech ? `<details><summary class="note">Technical detail</summary>
+                  <pre class="trace">${esc(tech)}</pre></details>` : ''}
+      </div>`;
+      return;
+    }
+    render(data);
+  } catch (e) {
+    $('#out').innerHTML = `<div class="card err">${esc(e.message)}</div>`;
+  } finally {
+    $('#go').disabled = false;
+    $('#status').textContent = '';
+  }
+});
+
+function render(d) {
+  const r = d.report;
+  let h = '';
+
+  // One banner per requested language. Each explanation already starts with the urgent
+  // line written in its own language; `urgent_message` is the English canonical form and
+  // showing it alone put an English banner in front of a Hindi-only reader.
+  if (d.urgent) {
+    const banners = d.explanations
+      .map(e => e.statements.find(s => s.source === 'system'))
+      .filter(Boolean).map(s => s.text);
+    h += (banners.length ? banners : [d.urgent_message])
+      .map(t => `<div class="urgent">${esc(t)}</div>`).join('');
+  }
+
+  // Whatever the letterhead gave us. A real report may carry none of this.
+  const head = [r.report_id, r.panel,
+                (r.patient_age && r.patient_sex) ? `${r.patient_age}${r.patient_sex}` : null,
+                r.collected_on].filter(Boolean).map(esc).join(' &middot; ');
+
+  h += `<div class="card"><h2>${head || 'Results'}</h2>
+        <table><thead><tr><th>Test</th><th class="num">Result</th><th></th>
+        <th class="num">Reference range</th><th class="num">Flag</th></tr></thead><tbody>`;
+  for (const t of r.results) {
+    const range = (t.ref_low != null && t.ref_high != null) ? `${t.ref_low} – ${t.ref_high}`
+                : (t.ref_high != null) ? `&lt; ${t.ref_high}`
+                : (t.ref_low != null) ? `&gt; ${t.ref_low}` : '—';
+    const mark = t.flag === 'normal' ? '' : t.flag.toUpperCase();
+    h += `<tr><td>${esc(t.test_name)}</td><td class="num">${esc(t.value)}</td>
+          <td class="note">${esc(t.unit)}</td><td class="num note">${range}</td>
+          <td class="num flag f-${esc(t.flag)}">${esc(mark)}</td></tr>`;
+  }
+  h += `</tbody></table><div class="step">Next step: <b>${esc(d.next_step)}</b></div></div>`;
+
+  for (const e of d.explanations) {
+    h += `<div class="card"><h2>${esc(LANG[e.language] || e.language)}</h2>`;
+    for (const [i, s] of e.statements.entries()) {
+      if (d.urgent && i === 0 && s.source === 'system') continue;  // already the banner
+      h += `<div class="stmt">${esc(s.text)}<div class="cites">${esc(s.test_ids.join(', '))}</div></div>`;
+    }
+    h += `</div>`;
+  }
+
+  if (d.warnings?.length) {
+    h += `<div class="card"><h2>Printed flag disagrees with the computed flag</h2>`;
+    for (const w of d.warnings) h += `<div class="dropped">${esc(w)}</div>`;
+    h += `<p class="note">The flag printed on the report is read but not trusted. It is
+          recomputed from the value and the printed range, and any disagreement is shown.</p></div>`;
+  }
+
+  if (d.dropped?.length) {
+    h += `<div class="card"><h2>Removed before you saw it</h2>`;
+    for (const x of d.dropped) {
+      h += `<div class="dropped"><span class="why">[${esc(x.language)}] ${esc(x.reason)}</span><br>${esc(x.text)}</div>`;
+    }
+    h += `<p class="note">These sentences were generated and then rejected, because every
+          statement must cite a test on this report and quote only that test's own numbers.
+          This is the guardrail working, shown rather than hidden.</p></div>`;
+  }
+
+  const m = d.meta;
+  h += `<p class="meta">${esc(m.model)} · ${esc(m.tokens_in)} in / ${esc(m.tokens_out)} out
+        · ${esc(m.latency_ms)} ms${m.cache_hit ? ' · cached' : ''}</p>`;
+  h += `<p class="note">Not a diagnosis. This explains what is printed on your report and
+        when to speak to a doctor.</p>`;
+
+  $('#out').innerHTML = h;
+}
+</script>
+</body>
+</html>

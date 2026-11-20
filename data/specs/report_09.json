@@ -1,0 +1,11 @@
+{
+  "report_id": "R-0009",
+  "panel": "hba1c",
+  "patient_age": 62,
+  "patient_sex": "M",
+  "collected_on": "2026-09-16",
+  "render": "low_contrast",
+  "results": [
+    {"test_id": "hba1c.hba1c", "test_name": "HbA1c", "value": 13.2, "unit": "%", "ref_low": 4.0, "ref_high": 5.6, "printed_flag": "H"}
+  ]
+}

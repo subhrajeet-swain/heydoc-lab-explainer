@@ -1,0 +1,18 @@
+# Convenience mirror of the dependencies in pyproject.toml, which is authoritative.
+# `pip install -e ".[dev]"` installs the same set plus the package itself.
+
+google-adk>=1.0.0
+pydantic>=2.7
+reportlab>=4.1
+python-dotenv>=1.0
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+
+# Tests and linting
+pytest>=8.0
+ruff>=0.5
+
+# pypdf is not needed to run the explainer. It is used only to confirm that a
+# generated PDF carries a real text layer rather than an image of one.
+pypdf>=5.0

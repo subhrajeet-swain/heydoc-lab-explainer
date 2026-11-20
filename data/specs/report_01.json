@@ -1,0 +1,16 @@
+{
+  "report_id": "R-0001",
+  "panel": "cbc",
+  "patient_age": 34,
+  "patient_sex": "M",
+  "collected_on": "2026-03-11",
+  "render": "clean",
+  "results": [
+    {"test_id": "cbc.hemoglobin", "test_name": "Hemoglobin", "value": 11.2, "unit": "g/dL", "ref_low": 13.0, "ref_high": 17.0, "printed_flag": "L"},
+    {"test_id": "cbc.rbc", "test_name": "RBC Count", "value": 4.2, "unit": "million/µL", "ref_low": 4.5, "ref_high": 5.9, "printed_flag": "L"},
+    {"test_id": "cbc.wbc", "test_name": "WBC Count", "value": 7800.0, "unit": "/µL", "ref_low": 4000.0, "ref_high": 11000.0, "printed_flag": null},
+    {"test_id": "cbc.platelets", "test_name": "Platelet Count", "value": 245000.0, "unit": "/µL", "ref_low": 150000.0, "ref_high": 410000.0, "printed_flag": null},
+    {"test_id": "cbc.hematocrit", "test_name": "Hematocrit", "value": 34.5, "unit": "%", "ref_low": 41.0, "ref_high": 50.0, "printed_flag": "L"},
+    {"test_id": "cbc.mcv", "test_name": "MCV", "value": 78.0, "unit": "fL", "ref_low": 80.0, "ref_high": 100.0, "printed_flag": "L"}
+  ]
+}

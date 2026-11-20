@@ -1,0 +1,14 @@
+{
+  "report_id": "R-0005",
+  "panel": "lipid",
+  "patient_age": 52,
+  "patient_sex": "F",
+  "collected_on": "2026-06-08",
+  "render": "clean",
+  "results": [
+    {"test_id": "lipid.total_cholesterol", "test_name": "Total Cholesterol", "value": 195.0, "unit": "mg/dL", "ref_low": null, "ref_high": 200.0, "printed_flag": null},
+    {"test_id": "lipid.ldl", "test_name": "LDL Cholesterol", "value": 110.0, "unit": "mg/dL", "ref_low": null, "ref_high": 130.0, "printed_flag": null},
+    {"test_id": "lipid.hdl", "test_name": "HDL Cholesterol", "value": 55.0, "unit": "mg/dL", "ref_low": 50.0, "ref_high": null, "printed_flag": null},
+    {"test_id": "lipid.triglycerides", "test_name": "Triglycerides", "value": 140.0, "unit": "mg/dL", "ref_low": null, "ref_high": 150.0, "printed_flag": null}
+  ]
+}

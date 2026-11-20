@@ -1,0 +1,15 @@
+{
+  "report_id": "R-0014",
+  "panel": "lft",
+  "patient_age": 57,
+  "patient_sex": "F",
+  "collected_on": "2026-05-27",
+  "render": "clean",
+  "results": [
+    {"test_id": "lft.bilirubin_total", "test_name": "Total Bilirubin", "value": 1.9, "unit": "mg/dL", "ref_low": 0.1, "ref_high": 1.2, "printed_flag": "H"},
+    {"test_id": "lft.alt", "test_name": "ALT (SGPT)", "value": 850.0, "unit": "U/L", "ref_low": 7.0, "ref_high": 35.0, "printed_flag": "H"},
+    {"test_id": "lft.ast", "test_name": "AST (SGOT)", "value": 540.0, "unit": "U/L", "ref_low": 10.0, "ref_high": 40.0, "printed_flag": "H"},
+    {"test_id": "lft.alp", "test_name": "Alkaline Phosphatase", "value": 160.0, "unit": "U/L", "ref_low": 44.0, "ref_high": 147.0, "printed_flag": "H"},
+    {"test_id": "lft.albumin", "test_name": "Albumin", "value": 3.9, "unit": "g/dL", "ref_low": 3.5, "ref_high": 5.0, "printed_flag": null}
+  ]
+}

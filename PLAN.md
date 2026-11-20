@@ -39,13 +39,13 @@ an instruction in a prompt:
 
 So the work splits:
 
-| Deterministic (Python, no model) | Model-driven (Gemini via ADK) |
-|---|---|
-| Compare value to its printed range → low/normal/high | Read the PDF into a structured schema |
-| Decide whether a value is critical | Phrase the explanation for a flag already decided |
-| Choose the next step from the fixed three-value list | |
-| Verify every sentence maps to an extracted value | |
-| Block diagnosis and prescription language | |
+| Deterministic (Python, no model)                      | Model-driven (Gemini via ADK)                     |
+| ----------------------------------------------------- | ------------------------------------------------- |
+| Compare value to its printed range → low/normal/high | Read the PDF into a structured schema             |
+| Decide whether a value is critical                    | Phrase the explanation for a flag already decided |
+| Choose the next step from the fixed three-value list  |                                                   |
+| Verify every sentence maps to an extracted value      |                                                   |
+| Block diagnosis and prescription language             |                                                   |
 
 A model asked to phrase an explanation cannot invent a flag, because it never decides the
 flag. A model asked to classify severity can. That is the whole design.
@@ -239,14 +239,14 @@ python -m lab_explainer.eval             # 30 cases, writes results table
 
 ## 8. Evaluation — 30 cases, written before the pipeline
 
-| Group | n | Measures |
-|---|---|---|
-| Clean extraction, all 5 panels | 10 | Field-level extraction accuracy |
-| Degraded input (low contrast, rotated, dense layout) | 5 | Extraction robustness |
-| Boundary values at range edges | 5 | Flag correctness — `>=` vs `>` off-by-one |
-| Critical values | 4 | Escalation: urgent set, consult forced, message first |
-| Adversarial questions ("do I have diabetes?", "which tablet?") | 4 | Unsafe-advice rate |
-| Grounding traps (plausible but unstated claims) | 2 | Unsupported-statement rate |
+| Group                                                          | n  | Measures                                              |
+| -------------------------------------------------------------- | -- | ----------------------------------------------------- |
+| Clean extraction, all 5 panels                                 | 10 | Field-level extraction accuracy                       |
+| Degraded input (low contrast, rotated, dense layout)           | 5  | Extraction robustness                                 |
+| Boundary values at range edges                                 | 5  | Flag correctness — `>=` vs `>` off-by-one        |
+| Critical values                                                | 4  | Escalation: urgent set, consult forced, message first |
+| Adversarial questions ("do I have diabetes?", "which tablet?") | 4  | Unsafe-advice rate                                    |
+| Grounding traps (plausible but unstated claims)                | 2  | Unsupported-statement rate                            |
 
 **Metrics**
 
@@ -292,13 +292,13 @@ production rates, with the arithmetic shown.
 Python, with libraries. Standard `src/` layout, `pyproject.toml`, `tests/` mirroring the
 package, data and fixtures outside the package.
 
-| Library | Why |
-|---|---|
-| **ADK 2.0** | Agent framework and its eval tooling |
-| **Pydantic** | Schema validation — the extraction must be schema-validated |
-| **reportlab** | Renders the 15 synthetic PDFs with a real text layer |
-| **pytest** | Unit tests for the deterministic half |
-| **FastAPI** | Only if deployed |
+| Library             | Why                                                          |
+| ------------------- | ------------------------------------------------------------ |
+| **ADK 2.0**   | Agent framework and its eval tooling                         |
+| **Pydantic**  | Schema validation — the extraction must be schema-validated |
+| **reportlab** | Renders the 15 synthetic PDFs with a real text layer         |
+| **pytest**    | Unit tests for the deterministic half                        |
+| **FastAPI**   | Only if deployed                                             |
 
 ```
 pyproject.toml            deps, entry points, pytest + ruff config
@@ -328,18 +328,18 @@ out/                      generated PDFs and eval results — gitignored
 
 Ground truth and evals come first, so every later step is measurable the moment it exists.
 
-| # | Step | Needs API key |
-|---|---|---|
-| 1 | `PLAN.md`, `.gitignore`, `.env.example` | no |
-| 2 | 15 specs + PDF generator | no |
-| 3 | `critical.json` + flagging engine + unit tests | no |
-| 4 | 30-case eval set with expected outputs | no |
-| 5 | Eval harness + results table (runs, fails everything) | no |
-| 6 | ExtractionAgent + Pydantic validation | yes |
-| 7 | ExplainAgent + grounding verifier + deny-list | yes |
-| 8 | Next-step rules + critical escalation | no |
-| 9 | Iterate against evals; record the eval-forced change | yes |
-| 10 | README, AI_USAGE.md, video walkthrough | no |
+| #  | Step                                                  | Needs API key |
+| -- | ----------------------------------------------------- | ------------- |
+| 1  | `PLAN.md`, `.gitignore`, `.env.example`         | no            |
+| 2  | 15 specs + PDF generator                              | no            |
+| 3  | `critical.json` + flagging engine + unit tests      | no            |
+| 4  | 30-case eval set with expected outputs                | no            |
+| 5  | Eval harness + results table (runs, fails everything) | no            |
+| 6  | ExtractionAgent + Pydantic validation                 | yes           |
+| 7  | ExplainAgent + grounding verifier + deny-list         | yes           |
+| 8  | Next-step rules + critical escalation                 | no            |
+| 9  | Iterate against evals; record the eval-forced change  | yes           |
+| 10 | README, AI_USAGE.md, video walkthrough                | no            |
 
 Steps 2–5 need no API key and no budget. A failing harness on day one is the point: if the
 free tier fails entirely, the deterministic half still runs and still demonstrates the
@@ -350,11 +350,11 @@ design.
 Every number in the results table traces back to something that can be opened and read.
 The eval run writes:
 
-| File | What it is |
-|---|---|
-| `out/results.md` | The metrics table — per-panel extraction accuracy, flag confusion matrix, grounding rate per language, unsafe-advice rate, latency, cost |
-| `out/failures.md` | Only the cases that failed, field by field: expected value from the spec vs what the model returned, with the PDF filename |
-| `out/cases/case_NN.json` | Full `ExplainedReport` for every case — extraction, flags, each language, cited test_ids, meta |
+| File                       | What it is                                                                                                                                |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `out/results.md`         | The metrics table — per-panel extraction accuracy, flag confusion matrix, grounding rate per language, unsafe-advice rate, latency, cost |
+| `out/failures.md`        | Only the cases that failed, field by field: expected value from the spec vs what the model returned, with the PDF filename                |
+| `out/cases/case_NN.json` | Full `ExplainedReport` for every case — extraction, flags, each language, cited test_ids, meta                                         |
 
 `python -m lab_explainer.explain <pdf>` prints a human-readable block: the results table
 with flags, then each explanation sentence with the test it cites in brackets. Read the
@@ -369,19 +369,6 @@ No number has to be taken on trust.
 ## 13. Out of scope
 
 - Real patient data. Synthetic only, generated in this repo.
-- OCR as a service. PDFs carry a real text layer; degraded cases exercise vision through
-  the same model.
 - Retrieval or vector search. Nothing here needs it.
-- A frontend, until the evals were green. One was added at the end: a single page
-  served by the API, no framework, no build step. The scored surface is the agent,
-  the evals and the explanation, and those came first.
-- Clinical validity of thresholds beyond citing published sources.
-
-## 14. Known limitations, stated up front
-
-- Five panels, 15 reports. Panel breadth is a data problem, not an architecture one — a
-  new panel is a spec file plus a few threshold entries.
-- The LLM judge has known biases. It is a second opinion over a deterministic first pass,
-  not a guarantee.
-- Hindi output is assessed for grounding and safety, not for register or dialect. That
-  needs a native reviewer, which this timebox does not include.
+- A frontend. The scored surface is the agent, the evals and the explanation. A frontend wasn't built, until the evals were green. One was added at the end: a single page served by the API, no framework, no build step. The scored- A frontend, until the evals were green. One was added at the end: a single page
+  served by the API, no framework, no build step.

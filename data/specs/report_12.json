@@ -1,0 +1,13 @@
+{
+  "report_id": "R-0012",
+  "panel": "thyroid",
+  "patient_age": 44,
+  "patient_sex": "F",
+  "collected_on": "2026-04-30",
+  "render": "rotated",
+  "results": [
+    {"test_id": "thyroid.tsh", "test_name": "TSH", "value": 6.8, "unit": "µIU/mL", "ref_low": 0.4, "ref_high": 4.0, "printed_flag": "H"},
+    {"test_id": "thyroid.t3", "test_name": "Total T3", "value": 96.0, "unit": "ng/dL", "ref_low": 80.0, "ref_high": 200.0, "printed_flag": null},
+    {"test_id": "thyroid.t4", "test_name": "Total T4", "value": 6.9, "unit": "µg/dL", "ref_low": 5.1, "ref_high": 14.1, "printed_flag": null}
+  ]
+}

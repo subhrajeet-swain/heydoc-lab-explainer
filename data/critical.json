@@ -1,0 +1,116 @@
+{
+  "cbc.hemoglobin": {
+    "unit": "g/dL",
+    "critical_low": 7.0,
+    "critical_high": 20.0,
+    "source": "NIH MedlinePlus / standard adult panic values"
+  },
+  "cbc.rbc": {
+    "unit": "million/µL",
+    "critical_low": 2.0,
+    "critical_high": 7.0,
+    "source": "Illustrative severe-range values. Verify before use."
+  },
+  "cbc.wbc": {
+    "unit": "/µL",
+    "critical_low": 2000,
+    "critical_high": 30000,
+    "source": "Illustrative severe-range values, rescaled to cells/µL. Verify before use."
+  },
+  "cbc.platelets": {
+    "unit": "/µL",
+    "critical_low": 20000,
+    "critical_high": 1000000,
+    "source": "Standard platelet panic values, rescaled to cells/µL."
+  },
+  "cbc.hematocrit": {
+    "unit": "%",
+    "critical_low": 20.0,
+    "critical_high": 60.0,
+    "source": "Standard adult panic values (hematocrit <20% or >60%), as in common lab panic tables"
+  },
+  "cbc.mcv": {
+    "unit": "fL",
+    "critical_low": 60.0,
+    "critical_high": 120.0,
+    "source": "Illustrative: no widely standardised MCV panic value. Verify before use."
+  },
+  "lipid.total_cholesterol": {
+    "unit": "mg/dL",
+    "critical_low": null,
+    "critical_high": 400,
+    "source": "Illustrative: severe-hypercholesterolemia threshold; no standard panic value. Verify before use."
+  },
+  "lipid.ldl": {
+    "unit": "mg/dL",
+    "critical_low": null,
+    "critical_high": 190,
+    "source": "NCEP ATP III 'very high' LDL threshold (>=190 mg/dL)"
+  },
+  "lipid.hdl": {
+    "unit": "mg/dL",
+    "critical_low": 20,
+    "critical_high": null,
+    "source": "Illustrative: very low HDL threshold; no standard panic value. Verify before use."
+  },
+  "lipid.triglycerides": {
+    "unit": "mg/dL",
+    "critical_low": null,
+    "critical_high": 500,
+    "source": "NCEP ATP III severe-hypertriglyceridemia threshold (>=500 mg/dL), pancreatitis risk"
+  },
+  "hba1c.hba1c": {
+    "unit": "%",
+    "critical_low": null,
+    "critical_high": 14.0,
+    "source": "Illustrative: severe-hyperglycemia HbA1c threshold; no standard panic value. Verify before use."
+  },
+  "thyroid.tsh": {
+    "unit": "µIU/mL",
+    "critical_low": 0.01,
+    "critical_high": 100.0,
+    "source": "µIU/mL is numerically equal to mIU/L. Illustrative. Verify before use."
+  },
+  "thyroid.t3": {
+    "unit": "ng/dL",
+    "critical_low": 40,
+    "critical_high": 400,
+    "source": "Illustrative: no standard panic value for total T3. Verify before use."
+  },
+  "thyroid.t4": {
+    "unit": "µg/dL",
+    "critical_low": 2.0,
+    "critical_high": 20.0,
+    "source": "TOTAL T4 in µg/dL, not free T4 in ng/dL. Illustrative. Verify before use."
+  },
+  "lft.bilirubin_total": {
+    "unit": "mg/dL",
+    "critical_low": null,
+    "critical_high": 15.0,
+    "source": "Illustrative: commonly cited severe-hyperbilirubinemia threshold. Verify before use."
+  },
+  "lft.alt": {
+    "unit": "U/L",
+    "critical_low": null,
+    "critical_high": 500,
+    "source": "Illustrative: transaminases above ~500 U/L are a recognised severe elevation. Verify before use."
+  },
+  "lft.ast": {
+    "unit": "U/L",
+    "critical_low": null,
+    "critical_high": 500,
+    "source": "Illustrative: transaminases above ~500 U/L are a recognised severe elevation. Verify before use."
+  },
+  "lft.alp": {
+    "unit": "U/L",
+    "critical_low": null,
+    "critical_high": 1000,
+    "source": "Illustrative: no standard ALP panic value. Verify before use."
+  },
+  "lft.albumin": {
+    "unit": "g/dL",
+    "critical_low": 2.0,
+    "critical_high": null,
+    "source": "Illustrative: commonly cited severe-hypoalbuminemia threshold. Verify before use."
+  }
+}
